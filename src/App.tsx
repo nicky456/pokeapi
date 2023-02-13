@@ -1,25 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react';
+import Loader from './components/Loader';
+import { storedPokemonTypesSelector, getstoredPokemonTypes } from './store/stroredPokemonTypesSlice';
+import { SliceStatus } from "./globals";
+import { useAppDispatch, useAppSelector } from './vars/hooks';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+const PokemonTypesPage = React.lazy(() => import('./components/PokemonTypesPage'));
 
-function App() {
+
+
+const App: React.FC =() =>{
+  const dispatch = useAppDispatch();
+  const storedPokemonTypes = useAppSelector(storedPokemonTypesSelector);
+
+
+  useEffect(() => {
+    dispatch(getstoredPokemonTypes());
+  }, [dispatch]);
+
   return (
+    <React.Suspense fallback={<Loader />}>
+      <Router>
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {(storedPokemonTypes.status.state === SliceStatus.LOADING ||
+      storedPokemonTypes.status.state === SliceStatus.IDLE) && <Loader/>}
+        <Routes>
+            <Route path="/" element={<PokemonTypesPage/>} />
+            {/* <Route path="/type/:name" component={PokemonsListPage} /> */}
+        </Routes>
     </div>
+        </Router>
+        </React.Suspense>
   );
 }
 
