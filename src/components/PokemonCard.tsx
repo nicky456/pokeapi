@@ -1,16 +1,17 @@
 import React from "react";
 import styled from "styled-components";
-import colors from "../vars/colors";
 import { Link } from "react-router-dom";
+import colors from "../vars/colors";
 
-interface TypeProps {
-  name: string;
+interface PokemonProps {
+  name: string | undefined;
+  type: string | undefined;
 }
 
-const TypeCard: React.FC<TypeProps> = ({ name }): JSX.Element => {
-  const fontColors = (name: string) => {
+const PokemonCard: React.FC<PokemonProps> = ({ name, type }): JSX.Element => {
+  const fontColors = (type: string | undefined) => {
     const fontColor = Object.entries(colors).filter(
-      ([key, _]) => key === name
+      ([key, _]) => key === type
     )[0];
     if (fontColor) {
       return fontColor[1];
@@ -18,39 +19,36 @@ const TypeCard: React.FC<TypeProps> = ({ name }): JSX.Element => {
   };
 
   return (
-    <Link to={`/type/${name}`}>
-      <TypeCardComponent
+    <Link to={`/pokemon/${name}`}>
+      <PokemonCardComponent
         className="shadow rounded"
         style={
           {
-            "--my-color-var": fontColors(name),
-            backgroundImage: `url(/assets/img/types/${name}.png)`,
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "center",
+            "--my-color-var": fontColors(type),
           } as React.CSSProperties
         }
       >
-        <Name style={{ color: fontColors(name) }}>{name}</Name>
-        <Icon className="fa fa-search fa-3x"></Icon>
-      </TypeCardComponent>
+        <Name>{name}</Name>
+        <Icon className="fa fa-info-circle fa-3x"></Icon>
+      </PokemonCardComponent>
     </Link>
   );
 };
 
-export default TypeCard;
+export default PokemonCard;
 
-const TypeCardComponent = styled.div`
+const PokemonCardComponent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-
   overflow: hidden;
   padding: 20px;
-  height: 200px;
+  height: 100px;
   width: 200px;
   position: relative;
   cursor: pointer;
+  background-color: var(--my-color-var);
   box-shadow: 0 0 25px 1px rgba(0, 0, 0, 0.3);
   transition: 0.5s;
 
@@ -63,7 +61,7 @@ const TypeCardComponent = styled.div`
     width: 500px;
     height: 500px;
     transform: translate(-140%, -50%);
-    background-color: var(--my-color-var);
+    background-color: ${colors.black};
     opacity: 0.8;
     border-radius: 50%;
     transition: 0.8s;
@@ -80,11 +78,18 @@ const TypeCardComponent = styled.div`
 `;
 
 const Name = styled.div`
-  text-transform: capitalize;
-  font-size: 20px;
-  font-weight: 600;
-  letter-spacing: 1.1px;
-  margin-top: 10px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  text-transform: uppercase;
+  text-align: center;
+  color: ${colors.white};
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: 1.8px;
+  text-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
 `;
 const Icon = styled.i`
   position: absolute;
@@ -92,9 +97,9 @@ const Icon = styled.i`
   top: 50%;
   left: 50%;
   transform: translate(-2000px, -50%);
-  color: ${colors.white};
+  color: #fff;
   text-shadow: 0px 0px 8px rgba(0, 0, 0, 0.6);
   transition: 0.8s;
   transition-timing-function: ease-in;
-  font-size: 80px;
+  font-size: 60px;
 `;

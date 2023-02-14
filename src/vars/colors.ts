@@ -22,6 +22,7 @@ let colors = {
   fairy: '#EC8EE6',
   unknown: '#0FA89E',
   shadow: '#C3C3C4',
+  red: '#EB5757',
 
 };
 

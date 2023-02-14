@@ -11,7 +11,7 @@ import { statusHandlerReducer, wrapReduxAsyncHandler } from "./utilities";
 //   };
 
 type SliceState = {
-    cache: (NamedAPIResource & { distance: number })[];
+   
     data: (NamedAPIResource & { distance: number })[];
     status: {
         state: SliceStatus;
@@ -19,45 +19,44 @@ type SliceState = {
 };  
 
 const initialState: SliceState = {
-    cache: [],
+    
     data: [],
     status: {
       state: SliceStatus.IDLE,
     },
   };
 
-const storedPokemonTypesSlice = createSlice({
-  name: "storedPokemonTypes",
+const pokemonTypesSlice = createSlice({
+  name: "pokemonTypes",
   initialState,
   reducers:{
     ...statusHandlerReducer,
-    getStoredPokemonTypesReducer(
+    getPokemonTypesReducer(
       state,
       action: PayloadAction<{
-        storedPokemonTypes: (NamedAPIResource & { distance: number })[]
+        pokemonTypes: (NamedAPIResource & { distance: number })[]
       }>
     ){
-      const { storedPokemonTypes } = action.payload;
-      state.cache = storedPokemonTypes;
-      state.data = storedPokemonTypes;
+      const { pokemonTypes } = action.payload;
+      state.data = pokemonTypes;
     }
   }
 })
 
-export const storedPokemonTypesReducer = storedPokemonTypesSlice.reducer;
+export const pokemonTypesReducer = pokemonTypesSlice.reducer;
 export const {
   initialize,
   error,
   success,
-  getStoredPokemonTypesReducer,
-} = storedPokemonTypesSlice.actions;
+  getPokemonTypesReducer,
+} = pokemonTypesSlice.actions;
 
 const statusHandler = { initialize, error, success };
 
-export const storedPokemonTypesSelector = (state: RootState) =>
-  state.storedPokemonTypes;
+export const pokemonTypesSelector = (state: RootState) =>
+  state.pokemonTypes;
 
-export const getstoredPokemonTypes = wrapReduxAsyncHandler(
+export const getpokemonTypes = wrapReduxAsyncHandler(
   statusHandler,
   async (dispatch) => {
     const {
@@ -68,8 +67,8 @@ export const getstoredPokemonTypes = wrapReduxAsyncHandler(
       distance: 0,
     }));
     dispatch(
-      getStoredPokemonTypesReducer({
-        storedPokemonTypes: transformedPokemonTypes,
+      getPokemonTypesReducer({
+        pokemonTypes: transformedPokemonTypes,
       })
     );
   })
