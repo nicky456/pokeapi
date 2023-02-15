@@ -5,11 +5,6 @@ import { RootState } from "./store";
 import { NamedAPIResource } from "./types";
 import { statusHandlerReducer, wrapReduxAsyncHandler } from "./utilities";
 
-// export type PokemonTypes = {
-//     name: string;
-//     url: string;
-//   };
-
 type SliceState = {
    
     data: (NamedAPIResource & { distance: number })[];

@@ -85,7 +85,7 @@ const Icon = styled.div`
 const Subtext = styled.div`
   font-weight: 300;
   font-size: 12px;
-  color: ${colors.white};
+  color: ${colors.black};
   margin: 5px 0 0 5px;
   line-height: 1.3;
 `;

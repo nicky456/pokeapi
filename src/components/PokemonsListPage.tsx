@@ -10,17 +10,21 @@ import {
 } from "../store/pokemonsListSlice";
 import PokemonCard from "./PokemonCard";
 import SearchInput from "./SearchInput";
+import Checkbox from "./Checkbox";
 import Loader from "./Loader";
+import { catchedSelector } from "../store/catchSlice";
 
 const PokemonsListPage: React.FC = () => {
   const { type } = useParams();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  const catched = useAppSelector(catchedSelector);
   const pokemonsList = useAppSelector(pokemonsListSelector);
   const pokemons = pokemonsList.data;
   const [filteredPokemons, setFilteredPokemons] = useState(pokemons);
   const [query, setQuery] = useState("");
+  const [checked, setChecked] = useState(false);
 
   useEffect(() => {
     if (pokemonsList?.data?.length === 0) {
@@ -42,6 +46,9 @@ const PokemonsListPage: React.FC = () => {
     }
   }, [query, pokemons]);
 
+  console.log(checked);
+  console.log(catched);
+
   return (
     <PokemonsListPageComponent className="container">
       {(pokemonsList.status.state === SliceStatus.LOADING ||
@@ -50,18 +57,26 @@ const PokemonsListPage: React.FC = () => {
         <BackButton onClick={() => navigate(-1)}>
           <Icon className="fa fa-arrow-left fa-3x"></Icon>
         </BackButton>
-        <Title>Search for a Pokemon</Title>
         <SearchInput query={query} setQuery={setQuery} />
-        <Title> or select one below</Title>
+        <Checkbox checked={checked} setChecked={setChecked} />
       </TitleRow>
       <Row className="row">
-        {filteredPokemons?.map((poke) => (
-          <Col className="col-md-auto" key={poke?.pokemon?.name}>
-            <>
-              <PokemonCard name={poke?.pokemon?.name} type={type} />
-            </>
-          </Col>
-        ))}
+        {!checked &&
+          filteredPokemons?.map((poke) => (
+            <Col className="col-md-auto" key={poke?.pokemon?.name}>
+              <>
+                <PokemonCard name={poke?.pokemon?.name} type={type} />
+              </>
+            </Col>
+          ))}
+        {checked &&
+          catched?.data?.map((poke) => (
+            <Col className="col-md-auto" key={poke}>
+              <>
+                <PokemonCard name={poke} type={type} />
+              </>
+            </Col>
+          ))}
       </Row>
     </PokemonsListPageComponent>
   );
@@ -73,9 +88,9 @@ const TitleRow = styled.div`
   padding-bottom: 50px;
   padding-top: 20px;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
-  gap: 5px;
+  gap: 20px;
 `;
 const BackButton = styled.div`
   position: absolute;
@@ -88,14 +103,7 @@ const Icon = styled.i`
   text-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
   font-size: 30px;
 `;
-const Title = styled.div`
-  color: ${colors.black};
-  font-size: 26px;
-  font-weight: 900;
-  letter-spacing: 1.5px;
-  text-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
-  width: auto;
-`;
+
 const PokemonsListPageComponent = styled.div``;
 const Row = styled.div`
   row-gap: 20px;

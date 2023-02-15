@@ -8,11 +8,9 @@ import {
   wrapReduxAsyncHandler,
 } from "./utilities";
 
-export const PAGINATE_SIZE = 6;
-
 export type Pokemon = {
   id: number;
-  name: string | undefined;
+  name: string ;
   base_experience: number;
   height: number;
   is_default: boolean;
@@ -76,9 +74,6 @@ const pokemonSlice = createSlice({
       const { pokemon } = action.payload;
       state.data = pokemon
     },
-    // addPokemon(state, action: PayloadAction<{ pokemon: (Pokemon|null) }>){
-    //   state.push(action.payload)
-    // }
   },
 });
 

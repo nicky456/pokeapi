@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import colors from "../vars/colors";
@@ -7,6 +7,8 @@ import {
   imageOnLoadHandler,
   imageOnErrorHandler,
 } from "../helpers/helperFuncions";
+import { useAppSelector } from "../vars/hooks";
+import { catchedSelector } from "../store/catchSlice";
 
 interface PokemonProps {
   name: string | undefined;
@@ -14,6 +16,13 @@ interface PokemonProps {
 }
 
 const PokemonCard: React.FC<PokemonProps> = ({ name, type }): JSX.Element => {
+  const [isCatched, setIsCatched] = useState(false);
+  const catched = useAppSelector(catchedSelector);
+
+  useEffect(() => {
+    return setIsCatched(catched?.data?.includes(name!));
+  }, [catched?.data, name]);
+
   return (
     <Link to={`/pokemon/${name}`}>
       <PokemonCardComponent
@@ -21,6 +30,11 @@ const PokemonCard: React.FC<PokemonProps> = ({ name, type }): JSX.Element => {
         style={
           {
             "--my-color-var": typeColors(type),
+            background: isCatched
+              ? colors.red
+              : `linear-gradient(0deg, rgba(255, 255, 255, 1) 0%,${typeColors(
+                  type
+                )} 100%)`,
           } as React.CSSProperties
         }
       >
@@ -61,12 +75,11 @@ const PokemonCardComponent = styled.div`
   background-color: var(--my-color-var);
   box-shadow: 0 0 25px 1px rgba(0, 0, 0, 0.3);
   transition: 0.5s;
-  background: linear-gradient(
+  /* background: linear-gradient(
     0deg,
     rgba(255, 255, 255, 1) 0%,
     var(--my-color-var) 100%
-  );
-
+  ) */
   &::after {
     content: "";
     position: absolute;

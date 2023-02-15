@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import colors from "../vars/colors";
@@ -11,18 +11,37 @@ import {
   imageOnErrorHandler,
 } from "../helpers/helperFuncions";
 import Loader from "./Loader";
+import {
+  catchedSelector,
+  catchPokemonReducer,
+  releasePokemonReducer,
+} from "../store/catchSlice";
 
 const PokemonDetailsPage = () => {
   const navigate = useNavigate();
   const { name } = useParams();
   const dispatch = useAppDispatch();
+  const [isCatched, setIsCatched] = useState(false);
 
   const pokemon = useAppSelector(pokemonSelector);
+  const catched = useAppSelector(catchedSelector);
   const pokemonDetails = pokemon?.data;
 
   useEffect(() => {
     dispatch(getPokemonById({ pokemonId: name }));
   }, [dispatch, name]);
+
+  useEffect(() => {
+    setIsCatched(catched?.data?.includes(pokemonDetails?.name.toString()));
+  }, [catched?.data, pokemonDetails?.name]);
+
+  const catchPokemon = (name: string) => {
+    dispatch(catchPokemonReducer(name));
+  };
+
+  const releasePokemon = (name: string) => {
+    dispatch(releasePokemonReducer(name));
+  };
 
   return (
     <PokemonsDetailsPageComponent className="container">
@@ -34,7 +53,7 @@ const PokemonDetailsPage = () => {
         </BackButton>
       </TitleRow>
       <Row className="row">
-        <PokeInfoBox className="col-md-6 offset-md-3 rounded shadow">
+        <PokeInfoBox className="col-lg-6 offset-lg-3 rounded shadow">
           <Row className="row ">
             <MainCol
               className="col-md-4"
@@ -57,9 +76,8 @@ const PokemonDetailsPage = () => {
               ></PokeImage>
               <Typerow className="row">
                 {pokemonDetails?.types?.map((type) => (
-                  <Link to={`/type/${type?.type?.name}`}>
+                  <Link to={`/type/${type?.type?.name}`} key={type?.type?.name}>
                     <TypeImage
-                      key={type?.type?.name}
                       src={`/assets/img/types/${type?.type?.name}.png`}
                       alt={type?.type?.name}
                     ></TypeImage>
@@ -113,7 +131,24 @@ const PokemonDetailsPage = () => {
                     ></SubImage>
                   )}
                 </MoreImages>
-                <Button className="rounded shadow">Catch</Button>
+                {!isCatched && (
+                  <Button
+                    onClick={() => catchPokemon(pokemonDetails?.name)}
+                    className="rounded shadow"
+                    style={{ background: colors.unknown }}
+                  >
+                    Catch
+                  </Button>
+                )}
+                {isCatched && (
+                  <Button
+                    onClick={() => releasePokemon(pokemonDetails?.name)}
+                    className="rounded shadow"
+                    style={{ background: colors.red }}
+                  >
+                    Release
+                  </Button>
+                )}
               </>
             </DetailCol>
           </Row>
@@ -200,7 +235,6 @@ const Text = styled.div`
 const Button = styled.div`
   width: 100px;
   margin: 10px auto;
-  background-color: ${colors.red};
   padding: 10px 20px;
   color: ${colors.white};
   font-size: 20px;
