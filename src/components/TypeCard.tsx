@@ -2,36 +2,42 @@ import React from "react";
 import styled from "styled-components";
 import colors from "../vars/colors";
 import { Link } from "react-router-dom";
+import { typeColors } from "../helpers/helperFuncions";
 
 interface TypeProps {
   name: string;
 }
 
 const TypeCard: React.FC<TypeProps> = ({ name }): JSX.Element => {
-  const fontColors = (name: string) => {
-    const fontColor = Object.entries(colors).filter(
-      ([key, _]) => key === name
-    )[0];
-    if (fontColor) {
-      return fontColor[1];
-    }
-  };
-
   return (
     <Link to={`/type/${name}`}>
       <TypeCardComponent
         className="shadow rounded"
         style={
           {
-            "--my-color-var": fontColors(name),
-            backgroundImage: `url(/assets/img/types/${name}.png)`,
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "center",
+            "--my-color-var": typeColors(name),
           } as React.CSSProperties
         }
       >
-        <Name style={{ color: fontColors(name) }}>{name}</Name>
-        <Icon className="fa fa-search fa-3x"></Icon>
+        <Card
+          className=" rounded"
+          style={
+            {
+              "--my-color-var": typeColors(name),
+            } as React.CSSProperties
+          }
+        >
+          <Image
+            style={{
+              backgroundImage: `url(/assets/img/types/${name}.png)`,
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "70%",
+              backgroundPosition: "center",
+            }}
+          ></Image>
+          <Name>{name}</Name>
+          <Icon className="fa fa-search fa-3x"></Icon>
+        </Card>
       </TypeCardComponent>
     </Link>
   );
@@ -40,19 +46,14 @@ const TypeCard: React.FC<TypeProps> = ({ name }): JSX.Element => {
 export default TypeCard;
 
 const TypeCardComponent = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
-
   overflow: hidden;
-  padding: 20px;
   height: 200px;
   width: 200px;
   position: relative;
   cursor: pointer;
   box-shadow: 0 0 25px 1px rgba(0, 0, 0, 0.3);
   transition: 0.5s;
+  background: ${colors.white};
 
   &::after {
     content: "";
@@ -79,12 +80,29 @@ const TypeCardComponent = styled.div`
   }
 `;
 
+const Card = styled.div`
+  height: 160px;
+  width: 160px;
+  margin: 10px;
+  padding: 10px;
+  background: linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0) 0%,
+    var(--my-color-var) 100%
+  );
+`;
+const Image = styled.div`
+  width: 160px;
+  height: 125px;
+`;
 const Name = styled.div`
   text-transform: capitalize;
+  text-align: center;
   font-size: 20px;
   font-weight: 600;
   letter-spacing: 1.1px;
   margin-top: 10px;
+  color: ${colors.black};
 `;
 const Icon = styled.i`
   position: absolute;

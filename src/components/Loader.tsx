@@ -1,42 +1,39 @@
 import React from "react";
-import styled from 'styled-components';
+import styled from "styled-components";
 
 import Logo from "../img/pokeapi.png";
 
 const Loader: React.FC = () => {
+  return (
+    <Spinner>
+      <ImageWrapper>
+        <Image className="App-logo" src={Logo} alt="PokeAPI" />
+      </ImageWrapper>
+    </Spinner>
+  );
+};
 
-    return(
-        <Spinner>
-            <ImageWrapper>
-
-            <Image className="App-logo" src={Logo} alt="PokeAPI"/>
-            </ImageWrapper>
-        </Spinner>
-    )
-}
-
-export default Loader
+export default Loader;
 
 const Spinner = styled.div`
-height: 100vh;
-width: 100vw;
+  height: 100vh;
+  width: 100vw;
 
-position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    background:rgba(0,0,0,0.8);
-    backdrop-filter: blur(6px);
-
-`
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(6px);
+`;
 const ImageWrapper = styled.div`
-position: absolute;
-top: 50%;
-left: 50%;
-transform: translate(-50%, -50%);
-`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
 const Image = styled.img`
-max-width: 10vw;
-object-fit: contain;
-`
+  max-width: 10vw;
+  object-fit: contain;
+`;

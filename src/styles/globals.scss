@@ -10,8 +10,10 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #202020;
+  background-color: #ffffff;
   padding: 30px;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 a{

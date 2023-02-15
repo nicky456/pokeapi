@@ -38,6 +38,7 @@ export default SearchInput;
 
 const InputTextComponent = styled.div`
   width: 220px;
+  padding-left: 0;
 `;
 
 const InputWrapper = styled.div`
@@ -47,22 +48,23 @@ const InputWrapper = styled.div`
 
 const Input = styled.input`
   height: 30px;
-  background-color: #6e6e6e;
-  border: 1px solid ${colors.electric};
+  background-color: ${colors.white};
+  border: 1px solid ${colors.black};
   border-radius: 10px;
   width: 100%;
   font-weight: 600;
   font-size: 16px;
-  color: ${colors.electric};
+  color: ${colors.black};
   padding-left: 10px;
   text-transform: uppercase;
 
   &:focus-visible,
   &:focus {
     outline: none;
+    border: 1px solid ${colors.black};
   }
   &:focus {
-    border: ${colors.electric};
+    border: 1px solid ${colors.black};
   }
   &::placeholder {
     color: ${colors.black};
@@ -77,7 +79,7 @@ const Icon = styled.div`
   transform: translateY(-50%);
   font-weight: 700;
   font-size: 16px;
-  color: ${colors.electric};
+  color: ${colors.black};
 `;
 
 const Subtext = styled.div`

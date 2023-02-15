@@ -20,10 +20,7 @@ const PokemonsListPage: React.FC = () => {
   const pokemonsList = useAppSelector(pokemonsListSelector);
   const pokemons = pokemonsList.data;
   const [filteredPokemons, setFilteredPokemons] = useState(pokemons);
-
-  useEffect(() => {
-    setFilteredPokemons(pokemons);
-  }, [pokemonsList, pokemons]);
+  const [query, setQuery] = useState("");
 
   useEffect(() => {
     if (pokemonsList?.data?.length === 0) {
@@ -31,9 +28,9 @@ const PokemonsListPage: React.FC = () => {
     }
   }, [type, dispatch, pokemonsList?.data?.length]);
 
-  const [query, setQuery] = useState("");
-
-  console.log(query);
+  useEffect(() => {
+    setFilteredPokemons(pokemons);
+  }, [pokemonsList, pokemons]);
 
   useEffect(() => {
     if (query?.length < 3) {
@@ -78,7 +75,7 @@ const TitleRow = styled.div`
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  gap: 20px;
+  gap: 5px;
 `;
 const BackButton = styled.div`
   position: absolute;
@@ -87,20 +84,21 @@ const BackButton = styled.div`
   cursor: pointer;
 `;
 const Icon = styled.i`
-  color: #fff;
-  text-shadow: 0px 0px 8px rgba(0, 0, 0, 0.6);
+  color: ${colors.black};
+  text-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
   font-size: 30px;
 `;
 const Title = styled.div`
-  color: ${colors.electric};
-  font-size: 32px;
+  color: ${colors.black};
+  font-size: 26px;
   font-weight: 900;
   letter-spacing: 1.5px;
-  text-shadow: 0px 0px 8px rgba(0, 0, 0, 1);
+  text-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
   width: auto;
 `;
 const PokemonsListPageComponent = styled.div``;
 const Row = styled.div`
   row-gap: 20px;
+  justify-content: center;
 `;
 const Col = styled.div``;

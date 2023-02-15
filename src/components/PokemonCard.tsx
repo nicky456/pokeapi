@@ -1,7 +1,12 @@
 import React from "react";
-import styled from "styled-components";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
 import colors from "../vars/colors";
+import { typeColors } from "../helpers/helperFuncions";
+import {
+  imageOnLoadHandler,
+  imageOnErrorHandler,
+} from "../helpers/helperFuncions";
 
 interface PokemonProps {
   name: string | undefined;
@@ -9,27 +14,33 @@ interface PokemonProps {
 }
 
 const PokemonCard: React.FC<PokemonProps> = ({ name, type }): JSX.Element => {
-  const fontColors = (type: string | undefined) => {
-    const fontColor = Object.entries(colors).filter(
-      ([key, _]) => key === type
-    )[0];
-    if (fontColor) {
-      return fontColor[1];
-    }
-  };
-
   return (
     <Link to={`/pokemon/${name}`}>
       <PokemonCardComponent
         className="shadow rounded"
         style={
           {
-            "--my-color-var": fontColors(type),
+            "--my-color-var": typeColors(type),
           } as React.CSSProperties
         }
       >
-        <Name>{name}</Name>
-        <Icon className="fa fa-info-circle fa-3x"></Icon>
+        <Card
+          className=" rounded"
+          style={
+            {
+              "--my-color-var": typeColors(name),
+            } as React.CSSProperties
+          }
+        >
+          <Image
+            src={`https://img.pokemondb.net/artwork/avif/${name}.avif`}
+            onLoad={imageOnLoadHandler}
+            onError={imageOnErrorHandler}
+            alt={name}
+          ></Image>
+          <Name>{name}</Name>
+          <Icon className="fa fa-info-circle fa-3x"></Icon>
+        </Card>
       </PokemonCardComponent>
     </Link>
   );
@@ -43,14 +54,18 @@ const PokemonCardComponent = styled.div`
   align-items: center;
   justify-content: flex-end;
   overflow: hidden;
-  padding: 20px;
-  height: 100px;
+  height: 260px;
   width: 200px;
   position: relative;
   cursor: pointer;
   background-color: var(--my-color-var);
   box-shadow: 0 0 25px 1px rgba(0, 0, 0, 0.3);
   transition: 0.5s;
+  background: linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 1) 0%,
+    var(--my-color-var) 100%
+  );
 
   &::after {
     content: "";
@@ -61,7 +76,7 @@ const PokemonCardComponent = styled.div`
     width: 500px;
     height: 500px;
     transform: translate(-140%, -50%);
-    background-color: ${colors.black};
+    background-color: var(--my-color-var);
     opacity: 0.8;
     border-radius: 50%;
     transition: 0.8s;
@@ -76,20 +91,30 @@ const PokemonCardComponent = styled.div`
     transition-timing-function: ease;
   }
 `;
+const Card = styled.div`
+  height: 220px;
+  width: 160px;
+  margin: 10px;
+  padding: 10px;
+  background: ${colors.white};
 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+const Image = styled.img`
+  width: 160px;
+  height: 125px;
+  object-fit: contain;
+`;
 const Name = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
-  text-transform: uppercase;
   text-align: center;
-  color: ${colors.white};
+  text-transform: capitalize;
+  color: ${colors.black};
+  margin-top: 20px;
   font-size: 24px;
   font-weight: 900;
-  letter-spacing: 1.8px;
-  text-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+  letter-spacing: 1px;
 `;
 const Icon = styled.i`
   position: absolute;

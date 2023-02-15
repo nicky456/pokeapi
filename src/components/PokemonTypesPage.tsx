@@ -45,15 +45,16 @@ const Image = styled.img`
   margin: 0 auto;
 `;
 const Title = styled.div`
-  color: ${colors.electric};
+  color: ${colors.black};
   font-size: 32px;
   font-weight: 900;
   letter-spacing: 1.5px;
-  text-shadow: 0px 0px 8px rgba(0, 0, 0, 1);
+  text-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
   margin-top: 10px;
 `;
 const PokemonTypesPageComponent = styled.div``;
 const Row = styled.div`
   row-gap: 20px;
+  justify-content: center;
 `;
 const Col = styled.div``;

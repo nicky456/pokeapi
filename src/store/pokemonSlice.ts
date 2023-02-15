@@ -13,13 +13,13 @@ export const PAGINATE_SIZE = 6;
 export type Pokemon = {
   id: number;
   name: string | undefined;
-  baseExperience: number;
+  base_experience: number;
   height: number;
-  isDefault: boolean;
+  is_default: boolean;
   order: number;
   weight: number;
   abilities: {
-    isHidden: boolean;
+    is_hidden: boolean;
     slot: number;
     ability: NamedAPIResource;
   }[];
@@ -28,18 +28,18 @@ export type Pokemon = {
     move: NamedAPIResource;
   }[];
   sprites: {
-    frontDefault: string;
-    frontShiny: string;
-    frontFemale: string;
-    frontShinyFemale: string;
-    backDefault: string;
-    backShiny: string;
-    backFemale: string;
-    backShinyFemale: string;
+    front_default: string;
+    front_shiny: string;
+    front_female: string;
+    front_fhiny_female: string;
+    back_default: string;
+    back_shiny: string;
+    back_female: string;
+    back_shiny_female: string;
   };
   species: NamedAPIResource[];
   stats: {
-    baseStat: number;
+    base_stat: number;
     effort: number;
     stat: NamedAPIResource;
   }[];
@@ -50,14 +50,14 @@ export type Pokemon = {
 };
 
 type SliceState = {
-  data: (Pokemon | null)[];
+  data: (Pokemon);
   status: {
     state: SliceStatus;
   };
 };
 
 const initialState: SliceState = {
-  data: [],
+  data: [][0],
   status: {
     state: SliceStatus.IDLE,
   },
@@ -71,7 +71,7 @@ const pokemonSlice = createSlice({
    
     getSinglePokemonReducer(
       state,
-      action: PayloadAction<{ pokemon: (Pokemon|null)[] }>
+      action: PayloadAction<{ pokemon: (Pokemon) }>
     ) {
       const { pokemon } = action.payload;
       state.data = pokemon
