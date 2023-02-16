@@ -82,7 +82,7 @@ const PokemonDetailsPage = () => {
                 {pokemonDetails?.types?.map((type) => (
                   <Link to={`/type/${type?.type?.name}`} key={type?.type?.name}>
                     <TypeImage
-                      src={`./assets/img/types/${type?.type?.name}.png`}
+                      src={`../assets/img/types/${type?.type?.name}.png`}
                       alt={type?.type?.name}
                     ></TypeImage>
                   </Link>
