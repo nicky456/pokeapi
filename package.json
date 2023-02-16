@@ -2,7 +2,7 @@
   "name": "pokeapi",
   "version": "0.1.0",
   "homepage": "https://nicky456.github.io/pokeapi/",
-  "private": true,
+  "private": false,
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.1",
     "@testing-library/jest-dom": "^5.16.5",
