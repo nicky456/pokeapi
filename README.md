@@ -2,10 +2,6 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## IMPORTANT
-
-To run the project on localhost go to App.tsx and remove basename="/pokeapi" from Router!
-
 ## Available Scripts
 
 In the project directory, you can run:

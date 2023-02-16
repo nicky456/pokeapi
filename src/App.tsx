@@ -23,7 +23,7 @@ const App: React.FC = () => {
 
   return (
     <React.Suspense fallback={<Loader />}>
-      <Router basename="/pokeapi">
+      <Router basename={process.env.PUBLIC_URL}>
         <div className="App">
           {(pokemonTypes.status.state === SliceStatus.LOADING ||
             pokemonTypes.status.state === SliceStatus.IDLE) && <Loader />}

@@ -82,8 +82,12 @@ const PokemonDetailsPage = () => {
                 {pokemonDetails?.types?.map((type) => (
                   <Link to={`/type/${type?.type?.name}`} key={type?.type?.name}>
                     <TypeImage
-                      src={`../assets/img/types/${type?.type?.name}.png`}
-                      alt={type?.type?.name}
+                      style={{
+                        backgroundImage: `url(/assets/img/types/${type?.type?.name}.png`,
+                        backgroundRepeat: "no-repeat",
+                        backgroundSize: "100%",
+                        backgroundPosition: "center",
+                      }}
                     ></TypeImage>
                   </Link>
                 ))}
@@ -242,7 +246,7 @@ const Typerow = styled.div`
     padding: 0;
   }
 `;
-const TypeImage = styled.img`
+const TypeImage = styled.div`
   width: 50px;
   height: 50px;
   object-fit: contain;
