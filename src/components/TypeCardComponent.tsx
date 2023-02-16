@@ -29,7 +29,7 @@ const TypeCard: React.FC<TypeProps> = ({ name }): JSX.Element => {
         >
           <Image
             style={{
-              backgroundImage: `url(/assets/img/types/${name}.png)`,
+              backgroundImage: `url(./assets/img/types/${name}.png)`,
               backgroundRepeat: "no-repeat",
               backgroundSize: "70%",
               backgroundPosition: "center",
