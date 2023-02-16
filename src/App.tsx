@@ -4,8 +4,8 @@ import {
   pokemonTypesSelector,
   getpokemonTypes,
 } from "./store/pokemonTypesSlice";
-import { SliceStatus } from "./globals";
-import { useAppDispatch, useAppSelector } from "./vars/hooks";
+import { SliceStatus } from "./store/globals";
+import { useAppDispatch, useAppSelector } from "./store/hooks";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import PokemonsListPage from "./components/PokemonsListPage";
 import PokemonsDetailsPage from "./components/PokemonDetailsPage";
@@ -24,7 +24,6 @@ const App: React.FC = () => {
 
   /// TO be deleted
   const catched = useAppSelector(catchedSelector);
-  console.log(catched);
 
   return (
     <React.Suspense fallback={<Loader />}>

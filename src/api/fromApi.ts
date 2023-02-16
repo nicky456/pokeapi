@@ -1,4 +1,4 @@
-import { HTTP_METHODS } from "../globals";
+import { HTTP_METHODS } from "../store/globals";
 import { createApiRequest } from "./axios";
 
 class ApiCallCreator {

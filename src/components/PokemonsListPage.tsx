@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import colors from "../vars/colors";
-import { useAppDispatch, useAppSelector } from "../vars/hooks";
-import { SliceStatus } from "../globals";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { SliceStatus } from "../store/globals";
 import {
   pokemonsListSelector,
   getpokemonsList,
@@ -18,7 +18,6 @@ const PokemonsListPage: React.FC = () => {
   const { type } = useParams();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
   const catched = useAppSelector(catchedSelector);
   const pokemonsList = useAppSelector(pokemonsListSelector);
   const pokemons = pokemonsList.data;
@@ -26,16 +25,19 @@ const PokemonsListPage: React.FC = () => {
   const [query, setQuery] = useState("");
   const [checked, setChecked] = useState(false);
 
+  //// Get and store the list of Pokemons from the selected type
   useEffect(() => {
     if (pokemonsList?.data?.length === 0) {
       dispatch(getpokemonsList({ type: type }));
     }
   }, [type, dispatch, pokemonsList?.data?.length]);
 
+  //// Add the above list as the displayed list
   useEffect(() => {
     setFilteredPokemons(pokemons);
   }, [pokemonsList, pokemons]);
 
+  //// Modify the dislpayed list based on the search query
   useEffect(() => {
     if (query?.length < 3) {
       setFilteredPokemons(pokemons);
@@ -45,9 +47,6 @@ const PokemonsListPage: React.FC = () => {
       );
     }
   }, [query, pokemons]);
-
-  console.log(checked);
-  console.log(catched);
 
   return (
     <PokemonsListPageComponent className="container">
@@ -83,6 +82,8 @@ const PokemonsListPage: React.FC = () => {
 };
 
 export default PokemonsListPage;
+
+//// Styles
 
 const TitleRow = styled.div`
   padding-bottom: 50px;

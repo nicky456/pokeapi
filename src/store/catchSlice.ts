@@ -4,9 +4,7 @@ import {
   statusHandlerReducer,
 } from "./utilities";
 
-export type Catched={
-  name: string|undefined;
-}
+//// Catch and release Pokemons
 
 type SliceState = {
   data: string[];

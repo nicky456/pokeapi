@@ -7,7 +7,7 @@ import {
   imageOnLoadHandler,
   imageOnErrorHandler,
 } from "../helpers/helperFuncions";
-import { useAppSelector } from "../vars/hooks";
+import { useAppSelector } from "../store/hooks";
 import { catchedSelector } from "../store/catchSlice";
 
 interface PokemonProps {
@@ -19,6 +19,7 @@ const PokemonCard: React.FC<PokemonProps> = ({ name, type }): JSX.Element => {
   const [isCatched, setIsCatched] = useState(false);
   const catched = useAppSelector(catchedSelector);
 
+  //// Check if the Pokemon on the card is already catched
   useEffect(() => {
     return setIsCatched(catched?.data?.includes(name!));
   }, [catched?.data, name]);
@@ -47,6 +48,7 @@ const PokemonCard: React.FC<PokemonProps> = ({ name, type }): JSX.Element => {
           }
         >
           <Image
+            // Show a nice image of the Pokemon if available. If not use a logo placeholder
             src={`https://img.pokemondb.net/artwork/avif/${name}.avif`}
             onLoad={imageOnLoadHandler}
             onError={imageOnErrorHandler}
@@ -61,6 +63,8 @@ const PokemonCard: React.FC<PokemonProps> = ({ name, type }): JSX.Element => {
 };
 
 export default PokemonCard;
+
+//// Styles
 
 const PokemonCardComponent = styled.div`
   display: flex;

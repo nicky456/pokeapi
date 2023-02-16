@@ -1,5 +1,5 @@
 import Axios from "axios";
-import { HTTP_METHODS } from "../globals";
+import { HTTP_METHODS } from "../store/globals";
 
 const axios = Axios.create({
   baseURL: "https://pokeapi.co/api/v2",

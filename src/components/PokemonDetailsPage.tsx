@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import colors from "../vars/colors";
-import { SliceStatus } from "../globals";
-import { useAppDispatch, useAppSelector } from "../vars/hooks";
+import { SliceStatus } from "../store/globals";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { getPokemonById, pokemonSelector } from "../store/pokemonSlice";
 import { typeColors } from "../helpers/helperFuncions";
 import {
@@ -21,24 +21,27 @@ const PokemonDetailsPage = () => {
   const navigate = useNavigate();
   const { name } = useParams();
   const dispatch = useAppDispatch();
-  const [isCatched, setIsCatched] = useState(false);
-
   const pokemon = useAppSelector(pokemonSelector);
   const catched = useAppSelector(catchedSelector);
   const pokemonDetails = pokemon?.data;
+  const [isCatched, setIsCatched] = useState(false);
 
+  //// Get and store the details of the selected Pokemon
   useEffect(() => {
     dispatch(getPokemonById({ pokemonId: name }));
   }, [dispatch, name]);
 
+  //// Check if the Pokemon is already catched
   useEffect(() => {
     setIsCatched(catched?.data?.includes(pokemonDetails?.name.toString()));
   }, [catched?.data, pokemonDetails?.name]);
 
+  //// Catch the Pokemon
   const catchPokemon = (name: string) => {
     dispatch(catchPokemonReducer(name));
   };
 
+  //// Release the Pokemon
   const releasePokemon = (name: string) => {
     dispatch(releasePokemonReducer(name));
   };
@@ -67,6 +70,7 @@ const PokemonDetailsPage = () => {
             >
               <Title>{pokemonDetails?.name}</Title>
               <PokeImage
+                // Show a nice image of the Pokemon if available. If not use a logo placeholder
                 src={`https://img.pokemondb.net/artwork/avif/${name}.avif`}
                 onLoad={imageOnLoadHandler}
                 onError={imageOnErrorHandler}
@@ -107,28 +111,40 @@ const PokemonDetailsPage = () => {
                 )}
                 <MoreImages>
                   {pokemonDetails?.sprites?.front_default && (
-                    <SubImage
-                      src={pokemonDetails?.sprites?.front_default}
-                      alt={pokemonDetails?.name}
-                    ></SubImage>
+                    <SubImageWrapper>
+                      <SubImage
+                        src={pokemonDetails?.sprites?.front_default}
+                        alt={pokemonDetails?.name}
+                      ></SubImage>
+                      <Caption>Front</Caption>
+                    </SubImageWrapper>
                   )}
                   {pokemonDetails?.sprites?.back_default && (
-                    <SubImage
-                      src={pokemonDetails?.sprites?.back_default}
-                      alt={pokemonDetails?.name}
-                    ></SubImage>
+                    <SubImageWrapper>
+                      <SubImage
+                        src={pokemonDetails?.sprites?.back_default}
+                        alt={pokemonDetails?.name}
+                      ></SubImage>
+                      <Caption>Back</Caption>
+                    </SubImageWrapper>
                   )}
                   {pokemonDetails?.sprites?.front_female && (
-                    <SubImage
-                      src={pokemonDetails?.sprites?.front_female}
-                      alt={pokemonDetails?.name}
-                    ></SubImage>
+                    <SubImageWrapper>
+                      <SubImage
+                        src={pokemonDetails?.sprites?.front_female}
+                        alt={pokemonDetails?.name}
+                      ></SubImage>
+                      <Caption>Female front</Caption>
+                    </SubImageWrapper>
                   )}
                   {pokemonDetails?.sprites?.back_female && (
-                    <SubImage
-                      src={pokemonDetails?.sprites?.back_female}
-                      alt={pokemonDetails?.name}
-                    ></SubImage>
+                    <SubImageWrapper>
+                      <SubImage
+                        src={pokemonDetails?.sprites?.back_female}
+                        alt={pokemonDetails?.name}
+                      ></SubImage>
+                      <Caption>Female back</Caption>
+                    </SubImageWrapper>
                   )}
                 </MoreImages>
                 {!isCatched && (
@@ -159,6 +175,8 @@ const PokemonDetailsPage = () => {
 };
 
 export default PokemonDetailsPage;
+
+//// Styles
 
 const PokemonsDetailsPageComponent = styled.div``;
 const TitleRow = styled.div`
@@ -249,9 +267,20 @@ const DetailCol = styled.div`
     margin: 5px 0;
   }
 `;
-const MoreImages = styled.div``;
+const MoreImages = styled.div`
+  display: flex;
+  margin-top: 30px;
+  margin-bottom: 30px;
+`;
+const SubImageWrapper = styled.div`
+  width: 100px;
+`;
 const SubImage = styled.img`
   width: 100px;
   height: 100px;
   object-fit: contain;
+`;
+const Caption = styled.div`
+  text-align: center;
+  font-size: 12px;
 `;

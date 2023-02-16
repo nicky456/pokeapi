@@ -1,17 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import fromApi from "../api/fromApi";
-import { SliceStatus } from "../globals";
+import { SliceStatus } from "./globals";
 import { RootState } from "./store";
-import { NamedAPIResource } from "./types";
+import { NamedAPIResource, PokemonBase } from "./types";
 import { statusHandlerReducer, wrapReduxAsyncHandler } from "./utilities";
 
-export type PokemonBase={
-  pokemon: {
-    name: string | undefined;
-    url: string;
-  }
-  slot: number
-}
+//// Get and store Pokemons from selected type
 
 type SliceState = {
     data: (PokemonBase | null)[];

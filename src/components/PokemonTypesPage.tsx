@@ -2,16 +2,16 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { pokemonTypesSelector } from "../store/pokemonTypesSlice";
 import { resetPokemonsListReducer } from "../store/pokemonsListSlice";
-import { useAppDispatch, useAppSelector } from "../vars/hooks";
-import TypeCard from "./TypeCard";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import TypeCard from "./TypeCardComponent";
 import Logo from "../img/pokeapi.png";
 import colors from "../vars/colors";
 
 const PokemonTypesPage: React.FC = () => {
   const dispatch = useAppDispatch();
-
   const pokemonTypes = useAppSelector(pokemonTypesSelector);
 
+  //// Clear stored Pokemons from the Pokemon list
   useEffect(() => {
     dispatch(resetPokemonsListReducer({}));
   }, [dispatch]);
@@ -34,6 +34,8 @@ const PokemonTypesPage: React.FC = () => {
 };
 
 export default PokemonTypesPage;
+
+//// Styles
 
 const TitleRow = styled.div`
   text-align: center;

@@ -45,6 +45,8 @@ const TypeCard: React.FC<TypeProps> = ({ name }): JSX.Element => {
 
 export default TypeCard;
 
+//// Styles
+
 const TypeCardComponent = styled.div`
   overflow: hidden;
   height: 200px;

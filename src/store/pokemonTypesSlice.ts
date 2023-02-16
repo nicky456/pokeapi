@@ -1,20 +1,20 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import fromApi from "../api/fromApi";
-import { SliceStatus } from "../globals";
+import { SliceStatus } from "./globals";
 import { RootState } from "./store";
 import { NamedAPIResource } from "./types";
 import { statusHandlerReducer, wrapReduxAsyncHandler } from "./utilities";
 
+//// Get and store Pokemon type list
+
 type SliceState = {
-   
     data: (NamedAPIResource & { distance: number })[];
     status: {
         state: SliceStatus;
     };
 };  
 
-const initialState: SliceState = {
-    
+const initialState: SliceState = {   
     data: [],
     status: {
       state: SliceStatus.IDLE,

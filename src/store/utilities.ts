@@ -1,6 +1,6 @@
 import { Dispatch } from "react";
 import { ActionCreatorWithPayload, PayloadAction } from "@reduxjs/toolkit";
-import { SliceStatus } from "../globals";
+import { SliceStatus } from "./globals";
 
 export const statusHandlerReducer = {
   initialize: (state: any, action: PayloadAction) => {

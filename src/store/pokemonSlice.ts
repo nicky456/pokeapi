@@ -1,51 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import fromApi from "../api/fromApi";
-import { SliceStatus } from "../globals";
+import { SliceStatus } from "./globals";
 import { RootState } from "./store";
-import { NamedAPIResource } from "./types";
 import {
   statusHandlerReducer,
   wrapReduxAsyncHandler,
 } from "./utilities";
+import { Pokemon } from "./types";
 
-export type Pokemon = {
-  id: number;
-  name: string ;
-  base_experience: number;
-  height: number;
-  is_default: boolean;
-  order: number;
-  weight: number;
-  abilities: {
-    is_hidden: boolean;
-    slot: number;
-    ability: NamedAPIResource;
-  }[];
-  forms: NamedAPIResource[];
-  moves: {
-    move: NamedAPIResource;
-  }[];
-  sprites: {
-    front_default: string;
-    front_shiny: string;
-    front_female: string;
-    front_fhiny_female: string;
-    back_default: string;
-    back_shiny: string;
-    back_female: string;
-    back_shiny_female: string;
-  };
-  species: NamedAPIResource[];
-  stats: {
-    base_stat: number;
-    effort: number;
-    stat: NamedAPIResource;
-  }[];
-  types: {
-    slot: number;
-    type: NamedAPIResource;
-  }[];
-};
+//// Get and store selected Pokemon
 
 type SliceState = {
   data: (Pokemon);
@@ -66,7 +29,6 @@ const pokemonSlice = createSlice({
   initialState,
   reducers: {
     ...statusHandlerReducer,
-   
     getSinglePokemonReducer(
       state,
       action: PayloadAction<{ pokemon: (Pokemon) }>
@@ -89,7 +51,6 @@ export const pokemonSelector = (state: RootState) => state.pokemon;
 
 const statusHandler = { initialize, error, success };
 
-
 export const getPokemonById = wrapReduxAsyncHandler(
   statusHandler,
   async (dispatch, { pokemonId }) => {
@@ -98,6 +59,5 @@ export const getPokemonById = wrapReduxAsyncHandler(
       ...pokemon,
     };
     dispatch(getSinglePokemonReducer({ pokemon: transformedPokemon }));
-    //dispatch(addPokemon({ pokemon: transformedPokemon }));
   }
 );
