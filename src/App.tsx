@@ -6,12 +6,7 @@ import {
 } from "./store/pokemonTypesSlice";
 import { SliceStatus } from "./store/globals";
 import { useAppDispatch, useAppSelector } from "./store/hooks";
-import {
-  BrowserRouter as Router,
-  HashRouter,
-  Routes,
-  Route,
-} from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import PokemonsListPage from "./components/PokemonsListPage";
 import PokemonsDetailsPage from "./components/PokemonDetailsPage";
 const PokemonTypesPage = React.lazy(
