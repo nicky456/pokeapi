@@ -6,7 +6,12 @@ import {
 } from "./store/pokemonTypesSlice";
 import { SliceStatus } from "./store/globals";
 import { useAppDispatch, useAppSelector } from "./store/hooks";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  HashRouter,
+  Routes,
+  Route,
+} from "react-router-dom";
 import PokemonsListPage from "./components/PokemonsListPage";
 import PokemonsDetailsPage from "./components/PokemonDetailsPage";
 const PokemonTypesPage = React.lazy(
@@ -23,7 +28,7 @@ const App: React.FC = () => {
 
   return (
     <React.Suspense fallback={<Loader />}>
-      <Router basename={process.env.PUBLIC_URL}>
+      <HashRouter basename={process.env.PUBLIC_URL}>
         <div className="App">
           {(pokemonTypes.status.state === SliceStatus.LOADING ||
             pokemonTypes.status.state === SliceStatus.IDLE) && <Loader />}
@@ -33,7 +38,7 @@ const App: React.FC = () => {
             <Route path="/pokemon/:name" element={<PokemonsDetailsPage />} />
           </Routes>
         </div>
-      </Router>
+      </HashRouter>
     </React.Suspense>
   );
 };

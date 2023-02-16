@@ -83,7 +83,7 @@ const PokemonDetailsPage = () => {
                   <Link to={`/type/${type?.type?.name}`} key={type?.type?.name}>
                     <TypeImage
                       style={{
-                        backgroundImage: `url(./assets/img/types/${type?.type?.name}.png`,
+                        backgroundImage: `url(../assets/img/types/${type?.type?.name}.png`,
                         backgroundRepeat: "no-repeat",
                         backgroundSize: "100%",
                         backgroundPosition: "center",
