@@ -9,7 +9,6 @@ import { useAppDispatch, useAppSelector } from "./store/hooks";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import PokemonsListPage from "./components/PokemonsListPage";
 import PokemonsDetailsPage from "./components/PokemonDetailsPage";
-import { catchedSelector } from "./store/catchSlice";
 const PokemonTypesPage = React.lazy(
   () => import("./components/PokemonTypesPage")
 );
@@ -21,9 +20,6 @@ const App: React.FC = () => {
   useEffect(() => {
     dispatch(getpokemonTypes());
   }, [dispatch]);
-
-  /// TO be deleted
-  const catched = useAppSelector(catchedSelector);
 
   return (
     <React.Suspense fallback={<Loader />}>
